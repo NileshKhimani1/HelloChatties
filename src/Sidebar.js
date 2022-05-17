@@ -14,18 +14,15 @@ function Sidebar() {
   const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
-    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
+    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) => {
       setRooms(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      )
-    );
+        snapshot.docs.filter((doc) => doc.data().name.includes(user.email))
+      );
+    });
     return () => {
       unsubscribe(); // meaning you always detach this real life listener(unsubscribe) whenever it is done using it
     };
-  }, []);
+  }, [user.email]);
 
   return (
     <div className="sidebar">
@@ -53,7 +50,14 @@ function Sidebar() {
       <div className="sidebar__chats">
         <SidebarChat addNewChat />
         {rooms.map((room) => (
-          <SidebarChat key={room.id} id={room.id} name={room.data.name} />
+          <SidebarChat
+            key={room.id}
+            id={room.id}
+            name={room
+              .data()
+              .name.split("|")
+              .find((name) => name != user.email)}
+          />
         ))}
       </div>
     </div>

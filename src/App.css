@@ -8,7 +8,12 @@
 .app__body {
   display: flex;
   background-color: #ededed;
+  background: url(./webp.jpg) center;
   width: 90vw;
   height: 90vh;
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.7);
+}
+
+.h1x {
+  margin: 30px auto;
 }

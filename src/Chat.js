@@ -14,9 +14,13 @@ function Chat() {
   const [seed, setSeed] = useState("");
   const { roomId } = useParams();
   const [roomName, setRoomName] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [messages, setMessages] = useState([]);
   const [{ user }, dispatch] = useStateValue();
-
+  useEffect(() => {
+    const names = roomName.split("|");
+    setDisplayName(names.find((name) => name != user.email));
+  }, [roomName]);
   useEffect(() => {
     if (roomId) {
       db.collection("rooms")
@@ -53,7 +57,7 @@ function Chat() {
       <div className="chat__header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat__headerInfo">
-          <h3>{roomName}</h3>
+          <h3>{displayName}</h3>
           <p>
             Last seen{" "}
             {new Date(

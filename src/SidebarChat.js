@@ -3,10 +3,12 @@ import "./SidebarChat.css";
 import { Avatar } from "@material-ui/core";
 import db from "./firebase";
 import { Link } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
 
 function SidebarChat({ id, name, addNewChat }) {
   const [seed, setSeed] = useState("");
   const [messages, setMessages] = useState("");
+  const [{user}, dispatch] = useStateValue();
 
   useEffect(() => {
     if (id) {
@@ -27,9 +29,8 @@ function SidebarChat({ id, name, addNewChat }) {
   const createChat = () => {
     const roomName = prompt("Please enter name for chat");
     if (roomName) {
-      //do some clever database stuff...
       db.collection("rooms").add({
-        name: roomName,
+        name: `${user.email}|${roomName}`,
       });
     }
   };
