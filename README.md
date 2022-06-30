@@ -1,4 +1,7 @@
-# whatsapp_clone
+# HelloChatties
+Check out app here  
+https://hello-chatties.web.app/
+
 A simple whatsapp clone, with Google sign in authentication and a real time secured database using Google Firebase
 
 ## Available Scripts
